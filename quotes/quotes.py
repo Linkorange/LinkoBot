@@ -27,11 +27,11 @@ def quote_command_handling(cmd):
 
 def choose_random_quote():
     """Chooses a random quote from the JSON file"""
-    with open('quotes.json', 'r') as quotes_file:
+    # FIXME: As the file is imported in ../linkobot.py, I had to add the relative path from it and not from quotes.py
+    with open('quotes/quotes.json', 'r') as quotes_file:
         quotes_list = json.load(quotes_file)
-        i = 0
-        while i < random.randrange(len(quotes_list) + 1):
-            pass
+        i = random.randrange(len(quotes_list))
+
         return format_quote(quotes_list[i]['content'], quotes_list[i]['author'])
 
 
@@ -56,7 +56,7 @@ def add_quote(quote_name, content, author='Linkorange'):
         for quote in quotes_list:
             if quote['name'] == quote_name:
                 can_write_in_list = False
-                break;
+                break
 
         if can_write_in_list:
             quotes_list.append({'name': quote_name, 'content': content, 'author': author})
@@ -65,5 +65,7 @@ def add_quote(quote_name, content, author='Linkorange'):
             json.dump(quotes_list, quotes_file)
             return "Quote successfully added !"
 
+
 def format_quote(content, author):
+    """Formats a quote in order to display it in chat"""
     return '"' + content + '", ' + author

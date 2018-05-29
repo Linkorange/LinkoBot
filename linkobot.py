@@ -2,6 +2,7 @@ import sys
 import irc.bot
 import requests
 from quotes.quotes import quote_command_handling
+from commands.command_utils import is_cmd_in_list
 
 
 class LinkoBot(irc.bot.SingleServerIRCBot):
@@ -32,7 +33,7 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
 
     def on_pubmsg(self, c, e):
         if e.arguments[0][:1] == '!':
-            cmd = e.arguments[0]#.split(' ')[0][1:]
+            cmd = e.arguments[0]
             print('Received command: ' + cmd)
             self.do_command(e, cmd[1:])
         return
@@ -40,11 +41,14 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
     def do_command(self, e, cmd):
         c = self.connection
 
-        if cmd.split(' ')[0] == 'bb':
-            c.privmsg(self.channel, 'A sheet explaining everything about blue balls : https://goo.gl/7MH1MG')
+        if is_cmd_in_list(cmd, 'bb'):
+            self.display_message_in_chat(c, 'A sheet explaining everything about blue balls : https://goo.gl/7MH1MG')
 
-        if cmd.split(' ')[0] == 'quote':
-            c.privmsg(self.channel, quote_command_handling(cmd))
+        if is_cmd_in_list(cmd, 'quote'):
+            self.display_message_in_chat(c, quote_command_handling(cmd))
+
+    def display_message_in_chat(self, c, message):
+        c.privmsg(self.channel, message)
 
 
 def main():
@@ -59,6 +63,7 @@ def main():
 
     bot = LinkoBot(username, client_id, token, channel)
     bot.start()
+
 
 if __name__ == "__main__":
     main()
