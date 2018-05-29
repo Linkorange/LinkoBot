@@ -1,7 +1,7 @@
 import sys
 import irc.bot
 import requests
-from quotes import quote_command_handling
+from quotes.quotes import quote_command_handling
 
 
 class LinkoBot(irc.bot.SingleServerIRCBot):
