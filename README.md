@@ -17,6 +17,7 @@ Returns a link to a Google Sheets explaning everything about blue balls. The Goo
 
 #### `!quote`
 Manages the quotes according several commands:
+
 ```!quote```: Returns a random quote from the current [quotes.json] file.
 
 ```!quote <quote_name>```: Returns a quote with the given name from the current [quotes.json] file. If no quote is found with this name, then the command does nothing.
