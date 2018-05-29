@@ -40,10 +40,10 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
     def do_command(self, e, cmd):
         c = self.connection
 
-        if cmd == "bb":
+        if cmd.split(' ')[0] == 'bb':
             c.privmsg(self.channel, 'A sheet explaining everything about blue balls : https://goo.gl/7MH1MG')
 
-        if cmd.startswith("quote"):
+        if cmd.split(' ')[0] == 'quote':
             c.privmsg(self.channel, quote_command_handling(cmd))
 
 
