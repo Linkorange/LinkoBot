@@ -1,0 +1,9 @@
+requires some clip/clips.json and highlight/highlights.json
+
+!clip <name> <link>				add a clip with name/link to clips.json
+!clip							plays a random clip
+!clip <name>					plays a clip with the given name
+
+!highlight <name> <link>		add a clip with name/link to clips.json
+!highlight						plays a random highlight
+!highlight <name>				plays a clip with the given name
