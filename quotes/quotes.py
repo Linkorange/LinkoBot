@@ -1,6 +1,7 @@
 import json
 import random
 import re
+import datetime
 
 
 def quote_command_handling(cmd):
@@ -11,6 +12,10 @@ def quote_command_handling(cmd):
     # !quote
     if cmd == "quote":
         return choose_random_quote()
+    # !quote quote_name "quote_content" quote_author quote_year
+    elif re.match(r'^quote (?P<name>\S+) "(?P<content>.+)" (?P<author>\S+) (?P<year>\d{4})$', cmd):
+        reg = re.match(r'^quote (?P<name>\S+) "(?P<content>.+)" (?P<author>\S+) (?P<year>\d{4})$', cmd)
+        return add_quote(reg.group('name'), reg.group('content'), reg.group('author'), int(reg.group('year')))
     # !quote quote_name "quote_content" quote_author
     elif re.match(r'^quote (?P<name>\S+) "(?P<content>.+)" (?P<author>\S+)$', cmd):
         reg = re.match(r'^quote (?P<name>\S+) "(?P<content>.+)" (?P<author>\S+)$', cmd)
@@ -29,43 +34,41 @@ def choose_random_quote():
     """Chooses a random quote from the JSON file"""
     # FIXME: As the file is imported in ../linkobot.py, I had to add the relative path from it and not from quotes.py
     with open('quotes/quotes.json', 'r') as quotes_file:
-        quotes_list = json.load(quotes_file)
-        i = random.randrange(len(quotes_list))
+        quotes_dict = json.load(quotes_file)
+        random_quote = quotes_dict[random.choice(list(quotes_dict.keys()))]
 
-        return format_quote(quotes_list[i]['content'], quotes_list[i]['author'])
+        return format_quote(random_quote['content'], random_quote['author'],
+                            random_quote['year'])
 
 
 def choose_given_quote(quote_name):
     """Chooses a quote from the JSON file given a name
 
     If the name is not found, then the function does nothing."""
-    with open('quotes.json', 'r') as quotes_file:
-        quotes_list = json.load(quotes_file)
-        for quote in quotes_list:
-            if quote['name'] == quote_name:
-                return format_quote(quote['content'], quote['author'])
+    with open('quotes/quotes.json', 'r') as quotes_file:
+        quotes_dict = json.load(quotes_file)
+        if quote_name in quotes_dict.keys():
+            quote = quotes_dict[quote_name]
+            return format_quote(quote['content'], quote['author'], quote['year'])
+        return ''
 
 
-def add_quote(quote_name, content, author='Linkorange'):
+def add_quote(quote_name, content, author='Linkorange', year=datetime.datetime.now().year):
     """Add a new quote to the JSON file"""
-    # Should add some quotes_list variable here so it can be used out of the with scope
-    with open('quotes.json', 'r+') as quotes_file:
-        quotes_list = json.load(quotes_file)
-        can_write_in_list = True
+    # Should add some quotes_dict variable here so it can be used out of the with scope
+    with open('quotes/quotes.json', 'r+') as quotes_file:
+        quotes_dict = json.load(quotes_file)
 
-        for quote in quotes_list:
-            if quote['name'] == quote_name:
-                can_write_in_list = False
-                break
+        if quote_name in quotes_dict.keys():
+            return "Cannot write this quote - name already exists !"
 
-        if can_write_in_list:
-            quotes_list.append({'name': quote_name, 'content': content, 'author': author})
-            quotes_file.seek(0)
-            quotes_file.truncate()
-            json.dump(quotes_list, quotes_file)
-            return "Quote successfully added !"
+        quotes_dict[quote_name] = {'content': content, 'author': author, 'year': year}
+        quotes_file.seek(0)
+        quotes_file.truncate()
+        json.dump(quotes_dict, quotes_file)
+        return "Quote successfully added !"
 
 
-def format_quote(content, author):
+def format_quote(content, author, year):
     """Formats a quote in order to display it in chat"""
-    return '"' + content + '", ' + author
+    return '"' + content + '", ' + str(year) + ', ' + author
