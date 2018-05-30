@@ -1,2 +1,7 @@
 bb
 quote
+discord
+twitter
+sn
+yt
+youtube

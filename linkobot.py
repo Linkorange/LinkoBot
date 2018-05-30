@@ -47,6 +47,25 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
         if is_cmd_in_list(cmd, 'quote'):
             self.display_message_in_chat(c, quote_command_handling(cmd))
 
+        if is_cmd_in_list(cmd, 'discord'):
+            self.display_message_in_chat(c, 'Join my Discord server ! https://discord.gg/bqeugS')
+
+        if is_cmd_in_list(cmd, 'twitter'):
+            self.display_message_in_chat(c, 'Follow me on Twitter ! https://twitter.com/Linkorange')
+
+        if is_cmd_in_list(cmd, 'yt'):
+            self.display_message_in_chat(c, 'See all my videos on my Youtube channel:'
+                                         + 'https://www.youtube.com/user/Linkorange')
+
+        if is_cmd_in_list(cmd, 'youtube'):
+            self.display_message_in_chat(c, 'See all my videos on my Youtube channel:'
+                                         + 'https://www.youtube.com/user/Linkorange')
+
+        if is_cmd_in_list(cmd, 'sn'):
+            self.display_message_in_chat(c, 'Follow me on Twitter ! https://twitter.com/Linkorange '
+                                         + 'And don\'t forget to join my Discord server :) https://discord.gg/bqeugS'
+                                         + 'Also find all my videos on https://www.youtube.com/user/Linkorange')
+
     def display_message_in_chat(self, c, message):
         c.privmsg(self.channel, message)
 
