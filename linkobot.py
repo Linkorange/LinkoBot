@@ -23,6 +23,7 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
         irc.bot.SingleServerIRCBot.__init__(self, [(server, port, 'oauth:'+token)], username, username)
 
     def on_welcome(self, c, e):
+        print('Connection successful!')
         print('Joining ' + self.channel + '...')
         c.cap('REQ', ':twitch.tv/membership')
         c.cap('REQ', ':twitch.tv/tags')
@@ -38,12 +39,18 @@ class LinkoBot(irc.bot.SingleServerIRCBot):
         return
 
     def do_command(self, e, cmd):
-        self.connection.privmsg(self.channel, write_in_chat_from_cmd(cmd))
+        print('Processing the command...')
+        try:
+            message = write_in_chat_from_cmd(cmd)
+            self.connection.privmsg(self.channel, message)
+            print('Wrote in chat: ' + message)
+        except Exception as err:
+            print('Could not process the command successfully. Details of the exception below\n' + str(err.args))
 
 
 def main():
     if len(sys.argv) != 5:
-        print("Usage: twitchbot ")
+        print("Wrong number of arguments in the command. Usage: linkobot.py <username> <client id> <token> <channel>")
         sys.exit(1)
 
     username = sys.argv[1]
@@ -52,6 +59,7 @@ def main():
     channel = sys.argv[4]
 
     bot = LinkoBot(username, client_id, token, channel)
+    print('Starting LinkoBot...')
     bot.start()
 
 
