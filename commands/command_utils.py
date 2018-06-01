@@ -1,5 +1,6 @@
 import json
 from quotes.quotes import quote_command_handling
+from roll.roll import roll
 
 # FIXME: As the file is imported in ../linkobot.py, I had to add the relative path from it and not from command_utils.py
 
@@ -24,8 +25,9 @@ def complex_treatment(full_cmd):
     if core_command == 'quote':
         return quote_command_handling(full_cmd)
     elif core_command == 'help':
-        print('Command begins with !help')
         return help_command(full_cmd)
+    elif core_command == 'roll':
+        return roll(full_cmd)
     return ''
 
 

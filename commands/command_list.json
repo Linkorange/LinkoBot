@@ -58,5 +58,9 @@
   "highlights":{
     "command":"All my highlights here : https://www.youtube.com/playlist?list=PLqhr82uR6sErxqjHAUUg_bWU9WxlSLCKb More dynamic command coming soon !",
     "help":"Provides a link to a Youtube playlist containing all my stream highlights."
+  },
+  "roll":{
+    "command":"complex_treatment",
+    "help":"Rolls one or more dice(s). See !help on how to use"
   }
 }
