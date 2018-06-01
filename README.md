@@ -6,12 +6,15 @@ A personal, orange bot on Twitch
 You can type several commands in chat preceded by a !, and the bot will react according the command.  
   
 The command list is available below :  
-`!bb` `!quote`\* `discord` `twitter` `youtube` `yt` `sn` `media` `social` `mstut` `z2tut` `aoltut` `pbs` `highlights` 
+`help`\* `!bb` `!quote`\* `discord` `twitter` `youtube` `yt` `sn` `media` `social` `mstut` `z2tut` `aoltut` `pbs` `highlights` 
   
 \* Some commands are a little more complex to use so be sure to check the Detailed Command List paragraph below.  
   
 ## <a name="detailed"></a>Detailed command list  
 Here you have the detailed list of every bot command and all their use cases.  
+
+#### `!help`
+Provides the link to this README.md file. Also if you type `!help <command>` in chat, it will give you basic information about the given command.
   
 #### `!bb`  
 Returns a link to a Google Sheets explaning everything about blue balls. The Google Sheets in question can be found [here](https://goo.gl/7MH1MG)  

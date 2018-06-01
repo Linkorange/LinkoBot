@@ -10,17 +10,37 @@ def write_in_chat_from_cmd(full_cmd):
     with open('commands/command_list.json') as command_list_json:
         command_list = json.load(command_list_json)
         if cmd in command_list.keys():
-            if command_list[cmd] == "complex_treatment":
+            if command_list[cmd]['command'] == "complex_treatment":
                 return complex_treatment(full_cmd)
-            return command_list[cmd]
+            return command_list[cmd]['command']
         return ''
 
 
-def complex_treatment(cmd):
+def complex_treatment(full_cmd):
     """Defines more complex treatments than just returning a string given a command
 
     Usually this function passes commands to functions which will parse them and make some treatments"""
-    core_command = cmd.split(' ')[0]
-    if core_command == "quote":
-        return quote_command_handling(cmd)
+    core_command = full_cmd.split(' ')[0]
+    if core_command == 'quote':
+        return quote_command_handling(full_cmd)
+    elif core_command == 'help':
+        print('Command begins with !help')
+        return help_command(full_cmd)
     return ''
+
+
+def help_command(full_cmd):
+    with open('commands/command_list.json') as command_list_json:
+        print('Successfully opened JSON file')
+        command_list = json.load(command_list_json)
+        print('JSON locally loaded')
+        if full_cmd == 'help':
+            print('Full command is !help')
+            return 'List of all commands and explanations there : https://github.com/Linkorange/LinkoBot'
+        elif len(full_cmd.split(' ')) == 2:
+            # cmd = string containing the command to have information about
+            cmd = full_cmd.split(' ')[1]
+            if cmd in command_list.keys():
+                return command_list[cmd]['help']
+            return ''
+        return ''
