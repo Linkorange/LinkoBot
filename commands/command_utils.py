@@ -1,14 +1,17 @@
 import json
+import os.path
 from quotes.quotes import quote_command_handling
 from roll.roll import roll
 
-# FIXME: As the file is imported in ../linkobot.py, I had to add the relative path from it and not from command_utils.py
+# Initializes the relative path for command_list.json
+abs_path = os.path.abspath(os.path.dirname(__file__))
+path_to_file = os.path.join(abs_path, 'command_list.json')
 
 
 def write_in_chat_from_cmd(full_cmd):
     """Returns a string given a command line according to the command_list.json JSON file"""
     cmd = full_cmd.split(' ')[0]
-    with open('commands/command_list.json') as command_list_json:
+    with open(path_to_file) as command_list_json:
         command_list = json.load(command_list_json)
         if cmd in command_list.keys():
             if command_list[cmd]['command'] == "complex_treatment":
@@ -32,12 +35,9 @@ def complex_treatment(full_cmd):
 
 
 def help_command(full_cmd):
-    with open('commands/command_list.json') as command_list_json:
-        print('Successfully opened JSON file')
+    with open(path_to_file) as command_list_json:
         command_list = json.load(command_list_json)
-        print('JSON locally loaded')
         if full_cmd == 'help':
-            print('Full command is !help')
             return 'List of all commands and explanations there : https://github.com/Linkorange/LinkoBot'
         elif len(full_cmd.split(' ')) == 2:
             # cmd = string containing the command to have information about

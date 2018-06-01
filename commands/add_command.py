@@ -1,9 +1,15 @@
 import json
 import sys
+import os.path
+
+
+# Initializes the relative path for command_list.json
+abs_path = os.path.abspath(os.path.dirname(__file__))
+path_to_file = os.path.join(abs_path, 'command_list.json')
 
 
 def add_command(cmd_name, cmd_msg='', help_msg=''):
-    with open('commands/command_list.json', 'r+') as command_list_json:
+    with open(path_to_file, 'r+') as command_list_json:
         command_list = json.load(command_list_json)
         command_list[cmd_name] = {'command': cmd_msg, 'help': help_msg}
 

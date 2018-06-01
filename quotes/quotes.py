@@ -2,6 +2,12 @@ import json
 import random
 import re
 import datetime
+import os.path
+
+
+# Initializes the relative path for quotes.json
+abs_path = os.path.abspath(os.path.dirname(__file__))
+path_to_file = os.path.join(abs_path, 'quotes.json')
 
 
 def quote_command_handling(cmd):
@@ -32,8 +38,7 @@ def quote_command_handling(cmd):
 
 def choose_random_quote():
     """Chooses a random quote from the JSON file"""
-    # FIXME: As the file is imported in ../linkobot.py, I had to add the relative path from it and not from quotes.py
-    with open('quotes/quotes.json', 'r') as quotes_file:
+    with open(path_to_file, 'r') as quotes_file:
         quotes_dict = json.load(quotes_file)
         random_quote = quotes_dict[random.choice(list(quotes_dict.keys()))]
 
@@ -45,7 +50,7 @@ def choose_given_quote(quote_name):
     """Chooses a quote from the JSON file given a name
 
     If the name is not found, then the function does nothing."""
-    with open('quotes/quotes.json', 'r') as quotes_file:
+    with open(path_to_file, 'r') as quotes_file:
         quotes_dict = json.load(quotes_file)
         if quote_name in quotes_dict.keys():
             quote = quotes_dict[quote_name]
@@ -56,7 +61,7 @@ def choose_given_quote(quote_name):
 def add_quote(quote_name, content, author='Linkorange', year=datetime.datetime.now().year):
     """Add a new quote to the JSON file"""
     # Should add some quotes_dict variable here so it can be used out of the with scope
-    with open('quotes/quotes.json', 'r+') as quotes_file:
+    with open(path_to_file, 'r+') as quotes_file:
         quotes_dict = json.load(quotes_file)
 
         if quote_name in quotes_dict.keys():

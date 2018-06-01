@@ -9,7 +9,7 @@
   },
   "quote":{
     "command":"complex_treatment",
-    "help":"Manages the quotes according several commands. See !help"
+    "help":"Manages the quotes according several commands. See !help for more details"
   },
   "discord":{
     "command":"Join my Discord server ! https://discord.gg/bqeugS",
