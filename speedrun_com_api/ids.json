@@ -1,0 +1,119 @@
+{
+  "users":
+  {
+    "linko":"1xyd3mxr",
+    "linkorange":"1xyd3mxr",
+    "pan":"dx3v4q8l",
+    "panulphe":"dx3v4q8l",
+    "ama":"zxz55rxq",
+    "amateseru":"zxz55rxq",
+    "zeldamaniak":"68wk0048",
+    "zmk":"68wk0048",
+    "simpoldood":"kj9rl7j4",
+    "simpol":"kj9rl7j4",
+    "sagaz":"18vr7d2x",
+    "sagaz14":"18vr7d2x",
+    "sagaz_14":"18vr7d2x"
+  },
+  "games":
+  {
+    "alttp":"9d3rr0dl",
+    "lttp":"9d3rr0dl",
+    "z3":"9d3rr0dl",
+    "z2":"pd0wk21e",
+    "aol":"pd0wk21e",
+    "taol":"pd0wk21e",
+    "z1":"369p0g1l",
+    "tloz":"369p0g1l",
+    "loz":"369p0g1l",
+    "ladx":"pdvj2vdw",
+    "alttpce":"m1zjyk06",
+    "lttpce":"m1zjyk06",
+    "z3ce":"m1zjyk06",
+    "lozce":"j1ne83y1",
+    "z1ce":"j1ne83y1",
+    "tlozce":"j1ne83y1",
+    "tmc":"w6jvl56j"
+  },
+  "games-categories":
+  {
+    "pdvj2vdw":
+    {
+      "has-sub-category": false,
+      "categories":
+      {
+        "nosqwwoob": "z2755zk0"
+      }
+    },
+    "9d3rr0dl":
+    {
+      "has-sub-category": true,
+      "categories":
+      {
+        "nmg":
+        {
+          "category": "wk6jz5rd",
+          "variable": "2lg2368p",
+          "sub-category": "013xwzr1"
+        },
+        "low":
+        {
+          "category": "wk6jz5rd",
+          "variable": "2lg2368p",
+          "sub-category": "5len3pml"
+        },
+        "ms":
+        {
+          "category": "wk6jz5rd",
+          "variable": "2lg2368p",
+          "sub-category": "0q54xd7l"
+        }
+      }
+    },
+    "j1ne83y1":
+    {
+      "has-sub-category": false,
+      "categories":
+      {
+        "2p1c": "5dw5q9nd"
+      }
+    },
+    "w6jvl56j":
+    {
+      "has-sub-category": false,
+      "categories":
+      {
+        "any": "wdmmv4dq"
+      }
+    },
+    "pd0wk21e":
+    {
+      "has-sub-category": false,
+      "categories":
+      {
+        "100ak": "9d86o62n"
+      }
+    },
+    "369p0g1l":
+    {
+      "has-sub-category": true,
+      "categories":
+      {
+        "noupa":
+        {
+          "category": "wdmw952q",
+          "variable": "9l7p6pl1",
+          "sub-category": "zqoj63x1"
+        }
+      }
+    },
+    "m1zjyk06":
+    {
+      "has-sub-category": false,
+      "categories":
+      {
+        "ohko": "rklqm7n2"
+      }
+    }
+  }
+}

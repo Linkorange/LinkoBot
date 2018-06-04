@@ -107,4 +107,6 @@ venv.bak/
 .idea
 
 # Others
-NE PAS COMMIT/
+NE_PAS_COMMIT/
+tests/
+filelist.txt
