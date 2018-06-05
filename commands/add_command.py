@@ -28,4 +28,4 @@ if __name__ == "__main__":
     elif len(sys.argv) == 4:
         add_command(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
-        print('Wrong number of arguments! Type "add_command.py <cmd_name> [<cmd_msg>] [<help_msg>]"')
+        print('Wrong number of arguments ! Type "add_command.py <cmd_name> [<cmd_msg>] [<help_msg>]"')

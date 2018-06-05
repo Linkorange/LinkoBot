@@ -1,7 +1,6 @@
 from speedrun_com_api.speedrun_com_api_utils import *
 import datetime
 import re
-import json
 
 
 def pb_command_handling(full_cmd):
@@ -9,39 +8,36 @@ def pb_command_handling(full_cmd):
     Handles the !pb command according to the number of parameters.
 
     :param full_cmd: The command entered in chat ('!' character excluded)
-    :return:
+    :return: The message to display in chat
     """
-
     current_game, current_category, current_user = get_current_data()
 
     # !pb
     if full_cmd == 'pb':
-        return choose_cat_or_not(current_user, current_game, current_category)
-    # !pb game TODO find something to make this command viable
-    # elif re.match(r'^\S (?P<game>\S)$', full_cmd):
-    #     r = re.match(r'^\S (?P<game>\S)$', full_cmd)
-    #     return choose_cat_or_not(current_user, r.group('game'), current_category)
+        return pb_choose_cat_or_not(current_user, current_game, current_category)
+    # !pb game
+    # TODO find something to make this command viable (same for the !wr command)
     # !pb game category
     elif re.match(r'^\S+ (?P<game>\S+) (?P<category>\S+)$', full_cmd):
         r = re.match(r'^\S+ (?P<game>\S+) (?P<category>\S+)$', full_cmd)
-        return choose_cat_or_not(current_user, r.group('game'), r.group('category'))
+        return pb_choose_cat_or_not(current_user, r.group('game'), r.group('category'))
     # !pb game category player
     elif re.match(r'^\S+ (?P<game>\S+) (?P<category>\S+) (?P<player>\S+)$', full_cmd):
         r = re.match(r'^\S+ (?P<game>\S+) (?P<category>\S+) (?P<player>\S+)$', full_cmd)
-        return choose_cat_or_not(r.group('player'), r.group('game'), r.group('category'))
+        return pb_choose_cat_or_not(r.group('player'), r.group('game'), r.group('category'))
     # Other
     return ''
 
 
-def pb_without_sub_cat(user, game, category):
+def pb_without_sub_category(user, game, category):
     """
     Writes the PB message for a user given a game and a category.
     Message looks like : "<user>'s personal best for <game> <category> is <time> (<place>th)"
 
-    :param user:
-    :param game: default
-    :param category: default
-    :return:
+    :param user: the given user name (not it's ID)
+    :param game: the given game name (not it's ID)
+    :param category: the given category code (not it's ID)
+    :return: The message to write in chat if everything went well, an empty string otherwise.
     """
     game_id = get_element_id_from_name(game)
     user_id = get_element_id_from_name(user)
@@ -70,15 +66,15 @@ def pb_without_sub_cat(user, game, category):
     return ''
 
 
-def pb_with_sub_cat(user, game, sub_category):
+def pb_with_sub_categories(user, game, sub_category):
     """
     Writes the PB message for a user given a game and a sub_category.
-    Message looks like : "<user>'s personal best for <game> <category> is <time> (<place>th)"
+    Message looks like : "<user>'s personal best for <game> <category> <sub_category> is <time> (<place>th)"
 
-    :param user:
-    :param game: default
-    :param sub_category: default
-    :return:
+    :param user: the given user name (not it's ID)
+    :param game: the given game name (not it's ID)
+    :param sub_category: the given sub category code (not it's ID)
+    :return: The message to write in chat if everything went well, an empty string otherwise.
     """
     game_id = get_element_id_from_name(game)
     user_id = get_element_id_from_name(user)
@@ -112,7 +108,13 @@ def pb_with_sub_cat(user, game, sub_category):
     return ''
 
 
-def choose_cat_or_not(user, game, category):
+def pb_choose_cat_or_not(user, game, category):
+    """
+    Chooses the function to use whether the game has sub_categories or not.
+    :param game: The game's name
+    :param category: The category code
+    :return: the result after being processed by the right function
+    """
     if has_sub_categories(game):
-        return pb_with_sub_cat(user, game, category)
-    return pb_without_sub_cat(user, game, category)
+        return pb_with_sub_categories(user, game, category)
+    return pb_without_sub_category(user, game, category)

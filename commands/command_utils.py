@@ -3,6 +3,7 @@ import os.path
 from quotes.quotes import quote_command_handling
 from roll.roll import roll
 from speedrun_com_api.pb import pb_command_handling
+from speedrun_com_api.wr import wr_command_handling
 
 # Initializes the relative path for command_list.json
 abs_path = os.path.abspath(os.path.dirname(__file__))
@@ -34,6 +35,8 @@ def complex_treatment(full_cmd):
         return roll(full_cmd)
     elif core_command == 'pb':
         return pb_command_handling(full_cmd)
+    elif core_command == 'wr':
+        return wr_command_handling(full_cmd)
     return ''
 
 

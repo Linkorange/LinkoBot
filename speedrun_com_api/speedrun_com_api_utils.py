@@ -8,7 +8,7 @@ def speedrun_api_connect(uri):
     Connects to the speedrun.com API according to an URI and returns the JSON object response from it.
 
     :param uri: The URI defining parameters of the query
-    :return: a JSON object corresponding to the query
+    :return: a JSON object corresponding to the query.Includes potential 404 as they are received as a JSON too.
     """
     abs_path = os.path.abspath(os.path.dirname(__file__))
     path_to_file = os.path.join(abs_path, '../NE_PAS_COMMIT/speedrun_com_api_oauth_key.txt')
@@ -25,6 +25,7 @@ def get_current_data():
     Returns the current data from the current_data.json file.
     Careful : The returned category might be a sub-category instead.
     Note : this function returns names and not IDs.
+
     :return: a tuple containing the current data in this order : game, category, user
     """
     abs_path = os.path.abspath(os.path.dirname(__file__))
@@ -53,12 +54,12 @@ def get_element_id_from_name(element_name):
         return element_name
 
 
-def get_id_category_from_name(game_id, category_name):
+def get_id_category_from_name(game_id, category_code):
     """
     Retrieves a category ID in the ids.json file given a game name and a category name.
 
     :param game_id: the game's ID whose category is looked for
-    :param category_name: the name to transform into an id
+    :param category_code: the category code to transform into an id
     :return: the ID corresponding to the given name. If the name is not found in the JSON, then returns it raw.
     """
     abs_path = os.path.abspath(os.path.dirname(__file__))
@@ -66,9 +67,9 @@ def get_id_category_from_name(game_id, category_name):
     with open(path_to_file) as ids_json_file:
         ids_json = json.load(ids_json_file)
         if game_id in ids_json['games-categories']:
-            if category_name in ids_json['games-categories'][game_id]['categories']:
-                return ids_json['games-categories'][game_id]['categories'][category_name]
-        return category_name
+            if category_code in ids_json['games-categories'][game_id]['categories']:
+                return ids_json['games-categories'][game_id]['categories'][category_code]
+        return category_code
 
 
 def has_sub_categories(game):
@@ -91,6 +92,17 @@ def has_sub_categories(game):
 
 
 def sub_categories_info(game_id, sub_category_name):
+    """
+    Returns some useful information about a sub category for a given name :
+    the category's ID, the variable's ID and the sub category's ID.
+    The "variable" generally corresponds the the "Sub Category" variable for speedrun.com mechanics. As sub categories
+    are not properly handled by speedrun.com, they use variables instead to store sub categories. More information on
+    the speedrun.com API documentation : https://github.com/speedruncomorg/api/blob/master/version1/variables.md
+
+    :param game_id: the game's ID from speedrun.com API
+    :param sub_category_name: the sub category code (not the ID)
+    :return: a tuple containing, in this order : category_id, variable_id, sub_category_id
+    """
     abs_path = os.path.abspath(os.path.dirname(__file__))
     path_to_file = os.path.join(abs_path, 'ids.json')
 
