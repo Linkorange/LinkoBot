@@ -3,7 +3,7 @@ import os.path
 import json
 
 
-def speedrun_api_connect(uri=''):
+def speedrun_api_connect(uri):
     """
     Connects to the speedrun.com API according to an URI and returns the JSON object response from it.
 
@@ -20,40 +20,19 @@ def speedrun_api_connect(uri=''):
         return requests.get(api_url, headers=headers).json()
 
 
-def get_current_game():
+def get_current_data():
     """
-    Returns the current game from the current_data.json file.
-    :return: a string containing the current game.
-    """
-    abs_path = os.path.abspath(os.path.dirname(__file__))
-    path_to_file = os.path.join(abs_path, 'current_data.json')
-
-    with open(path_to_file) as current_game_json:
-        return json.load(current_game_json)['game']
-
-
-def get_current_category():
-    """
-    Returns the current category from the current_data.json file.
-    :return: a string containing the current category.
+    Returns the current data from the current_data.json file.
+    Careful : The returned category might be a sub-category instead.
+    Note : this function returns names and not IDs.
+    :return: a tuple containing the current data in this order : game, category, user
     """
     abs_path = os.path.abspath(os.path.dirname(__file__))
     path_to_file = os.path.join(abs_path, 'current_data.json')
 
     with open(path_to_file) as current_game_json:
-        return json.load(current_game_json)['game']
-
-
-def get_current_sub_category():
-    """
-    Returns the current sub category from the current_data.json file.
-    :return: a string containing the current sub category.
-    """
-    abs_path = os.path.abspath(os.path.dirname(__file__))
-    path_to_file = os.path.join(abs_path, 'current_data.json')
-
-    with open(path_to_file) as current_game_json:
-        return json.load(current_game_json)['game']
+        current_data = json.load(current_game_json)
+        return current_data['game'], current_data['category'], current_data['user']
 
 
 def get_element_id_from_name(element_name):
@@ -92,85 +71,7 @@ def get_id_category_from_name(game_id, category_name):
         return category_name
 
 
-def get_user_name(user):
-    """
-    Fetches the user name from speedrun.com API given a string.
-
-    :param user: a string defining the user
-    :return: The international name from a user
-    """
-    user_id = get_element_id_from_name(user)
-    uri = 'users/' + user_id
-    response = speedrun_api_connect(uri)
-    if 'data' in response.keys():
-        return response['data']['names']['international']
-    return ''
-
-
-def get_category_name(category_id):
-    """
-    Fetches the category name from speedrun.com API given a string.
-
-    :param category_id: the ID of the desired category
-    :return: The official category name
-    """
-    uri = 'categories/' + category_id
-    response = speedrun_api_connect(uri)
-    if 'data' in response.keys():
-        return response['data']['name']
-    return ''
-
-
-def get_sub_category_name(game_id, sub_category):
-    """
-    Fetches the sub category name from speedrun.com API given a string.
-
-    :param sub_category: a string defining the category
-    :return: The official category name
-    """
-    category_id, variable_id, sub_category_id = sub_categories_info(game_id, sub_category)
-    uri = 'categories/' + category_id + '/variables'
-    response = speedrun_api_connect(uri)
-    if 'data' in response.keys():
-        for variable in response['data']:
-            if variable['id'] == variable_id:
-                if sub_category_id in variable['values']['values']:
-                    return variable['values']['values'][sub_category_id]['label']
-    return ''
-
-
-def get_category_name_from_sub_category(game_id, sub_category):
-    """
-    Fetches the sub category name from speedrun.com API given a string.
-
-    :param sub_category: a string defining the category
-    :return: The official category name
-    """
-    category_id, variable_id, sub_category_id = sub_categories_info(game_id, sub_category)
-    uri = 'categories/' + category_id
-    response = speedrun_api_connect(uri)
-
-    if 'data' in response.keys():
-        return response['data']['name']
-    return ''
-
-
-def get_game_name(game):
-    """
-    Fetches the game name from speedrun.com API given a string.
-
-    :param game: a string defining the game
-    :return: The international game name
-    """
-    game_id = get_element_id_from_name(game)
-    uri = 'games/' + game_id
-    response = speedrun_api_connect(uri)
-    if 'data' in response.keys():
-        return response['data']['names']['international']
-    return ''
-
-
-def has_sub_category(game):
+def has_sub_categories(game):
     """
     Determines if a game has sub categories or not
     For instance ALTTP has No Major Glitches (category) > Any% (sub category), while TMC has only Any% or 100%
